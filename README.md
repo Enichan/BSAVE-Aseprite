@@ -1,5 +1,5 @@
 # BSAVE For Aseprite
-This is a script for Aseprite to save sprites to QBasic's BSAVE format, assuming 8 bits per pixel.
+This is a script for Aseprite to save sprites to the QBasic BSAVE format, assuming 8 bits per pixel.
 
 # Installation
 Download `Export BSAVE.lua` and place it in `%APPDATA%\Aseprite\scripts` and restart Aseprite if it was already running.
