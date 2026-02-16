@@ -22,3 +22,22 @@ end
 
 **What does the "double pixels horizontally" option do?** \
 Each pixel is duplicated across 2 bytes (or one 16-bit integer) which isn't that helpful to most people but I use it for my 160x100 display mode. That mode is MODE 13 but with a tweak to the VGA registers that draws each logical scanline twice on screen, resulting in 320x100, then I double each pixel to effectively get 160x100. If you're not doing that, you'll want to leave this one off probably.
+
+A nice benefit of this mode is that it splits the 320x200 VGA memory into effectively two pages. And because QBasic still thinks the screen is 320x200 all the built-in drawing functions will still work (just add 100 to the Y coordinate for the 2nd page) and you can "page flip" by setting the VGA's start address:
+
+```qbasic
+SUB PageFlip (page%)
+    page% = (page% + 1) AND 1
+  
+    ' note: address in 32-bit words
+    pghi% = page% * &H1F
+    pglo% = page% * &H40
+
+    ' set VGA start address hi register
+    OUT &H3D4, &HC
+    OUT &H3D5, pghi%
+    ' set VGA start address low register
+    OUT &H3D4, &HD
+    OUT &H3D5, pglo%
+END SUB
+```
