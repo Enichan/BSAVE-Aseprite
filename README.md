@@ -41,3 +41,21 @@ SUB PageFlip (page%)
     OUT &H3D5, pglo%
 END SUB
 ```
+
+If you're interested in this 320x100 video mode, you can set it up like this:
+
+```qbasic
+SCREEN 13
+
+' turn off CRTC write protect
+OUT &H3D4, &H11
+OUT &H3D5, INP(&H3D5) AND &H7F
+
+' enable line doubling
+OUT &H3D4, &H9
+OUT &H3D5, &H81
+
+' turn on CRTC write protect
+OUT &H3D4, &H11
+OUT &H3D5, INP(&H3D5) OR &H80
+```
