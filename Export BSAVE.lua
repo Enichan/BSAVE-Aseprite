@@ -61,7 +61,7 @@ if data.ok then
         width = width * 2
     end
 
-    local length = width * sprite.height + 4
+    local length = width * sprite.height
     if data.imageHeader then
         -- 4 extra for PUT header width/height
         length = length + 4
