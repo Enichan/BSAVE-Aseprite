@@ -19,6 +19,11 @@ dlg:file{ id="exportFile",
           save=true,
           filetypes={"bin" }}
 
+dlg:check{ id="imageHeader",
+           label="Include image header",
+           text="",
+           selected=true }
+
 dlg:check{ id="pixelDoubled",
            label="Double pixels horizontally",
            text="",
@@ -55,16 +60,23 @@ if data.ok then
     if data.pixelDoubled then
         width = width * 2
     end
+
+    local length = width * sprite.height + 4
+    if data.imageHeader then
+        -- 4 extra for PUT header width/height
+        length = length + 4
+    end
     
-    local length = width * sprite.height + 4 -- 4 for PUT header width/height
     table.insert(bytes, length & 0xFF) -- length in bytes
     table.insert(bytes, length >> 8)
     
-    local bitWidth = width * 8
-    table.insert(bytes, bitWidth & 0xFF) -- width in bits
-    table.insert(bytes, bitWidth >> 8)
-    table.insert(bytes, sprite.height & 0xFF) -- height in bits
-    table.insert(bytes, sprite.height >> 8)
+    if data.imageHeader then
+        local bitWidth = width * 8
+        table.insert(bytes, bitWidth & 0xFF) -- width in bits
+        table.insert(bytes, bitWidth >> 8)
+        table.insert(bytes, sprite.height & 0xFF) -- height in rows
+        table.insert(bytes, sprite.height >> 8)
+    end
 
     if data.pixelDoubled then
         for y = 0, sprite.height - 1 do

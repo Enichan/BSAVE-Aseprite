@@ -20,6 +20,13 @@ if not data.pixelDoubled and (sprite.width & 1) == 1 then
 end
 ```
 
+**What does the "Include image header" option do?** \
+Short answer: if this option is on you can use the data after BLOAD with the PUT graphics command to write it to the screen. If in doubt leave this on.
+
+Longer answer: BSAVE's format is for any binary data. The PUT graphics command expects your array to start with 4 bytes, 2 describing the image's width and 2 describing the image's height. When saving an image to the BSAVE format this is usually going to be what you want. However, there may be a reason that you just want the raw binary values that describe the image's pixels without this header so that you can BLOAD them anywhere in memory you want. If you're after such nefarious purposes, unchecking this option will let you do exactly that.
+
+Interesting factoid: because GET and PUT work with different graphics modes the image header actually stores the width of the image in bits, not bytes. Although this export script only supports 8 bits per pixel chunky VGA.
+
 **What does the "double pixels horizontally" option do?** \
 Each pixel is duplicated across 2 bytes (or one 16-bit integer) which isn't that helpful to most people but I use it for my 160x100 display mode. That mode is MODE 13 but with a tweak to the VGA registers that draws each logical scanline twice on screen, resulting in 320x100, then I double each pixel to effectively get 160x100. If you're not doing that, you'll want to leave this one off probably.
 
