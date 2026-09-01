@@ -9,14 +9,14 @@ Use `File > Scripts > Export BSAVE` and select a file then press OK.
 
 # FAQ
 
-**Why do I get a warning that the sprite width is an odd value?** \
-The closest match for an 8-bit data type in QBasic is 16-bit integers. If the width of a sprite is odd it won't fit exactly in an array of 16-bit integers.
+**Why do I get a warning that the sprite length is an odd value?** \
+The closest match for an 8-bit data type in QBasic is 16-bit integers. If the width and height of a sprite are both odd it won't fit exactly in an array of 16-bit integers.
 
 If you hate this warning, you can comment out the following lines:
 
 ```lua
-if not data.pixelDoubled and (sprite.width & 1) == 1 then
-    app.alert("Warning: sprite width is an odd value")
+if not data.pixelDoubled and (sprite.width & 1) == 1 and (sprite.height & 1) == 1 then
+    app.alert("Warning: sprite length is an odd value")
 end
 ```
 

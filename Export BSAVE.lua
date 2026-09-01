@@ -35,8 +35,8 @@ dlg:show()
 
 local data = dlg.data
 
-if not data.pixelDoubled and (sprite.width & 1) == 1 then
-    app.alert("Warning: sprite width is an odd value")
+if not data.pixelDoubled and (sprite.width & 1) == 1 and (sprite.height & 1) == 1 then
+    app.alert("Warning: sprite length is an odd value")
 end
 
 if data.ok then
